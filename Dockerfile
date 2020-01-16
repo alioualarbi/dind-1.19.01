@@ -1,4 +1,5 @@
 FROM docker:19.03.1
+
 # https://github.com/docker/docker/blob/master/project/PACKAGERS.md#runtime-dependencies
 RUN set -eux; \
 	apk add --no-cache \
@@ -30,7 +31,7 @@ RUN set -x \
 	&& echo 'dockremap:165536:65536' >> /etc/subgid
 
 # https://github.com/docker/docker/tree/master/hack/dind
-ENV DIND_COMMIT %%DIND-COMMIT%%
+ENV DIND_COMMIT 37498f009d8bf25fbb6199e8ccd34bed84f2874b
 
 RUN set -eux; \
 	wget -O /usr/local/bin/dind "https://raw.githubusercontent.com/docker/docker/${DIND_COMMIT}/hack/dind"; \
@@ -42,4 +43,4 @@ VOLUME /var/lib/docker
 EXPOSE 2375 2376
 
 ENTRYPOINT ["dockerd-entrypoint.sh"]
-CMD []
+CMD [sh]
